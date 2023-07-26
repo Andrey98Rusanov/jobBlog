@@ -1,9 +1,12 @@
+import { useDispatch } from "react-redux"
 import "./Header.css"
+import { Link } from "react-router-dom"
 
 function Header () {
+    const dispatch =useDispatch()
     return (
         <div className="header">
-            <a className="logo">Realworld Blog</a>
+            <Link to="/" className="logo" onClick={() => dispatch({type: "CHANGE_PAGE", payload: 1}) }>Realworld Blog</Link>
             <div className="header_buttons">
             <button className="header_button">Sign in</button>
             <button className="header_button">Sign up</button>

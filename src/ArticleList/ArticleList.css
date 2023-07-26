@@ -1,5 +1,6 @@
 .article{
     width: 90%;
+    height: 120px;
     margin: auto;
     margin-top: 20px;
     position: relative;
@@ -7,19 +8,21 @@
     box-shadow: 6px 5px 8px 0px rgba(34, 60, 80, 0.2);
     padding: 10px;
     overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .article img{
     width: 55px;
-    border: solid black 2px;
+    height: 55px;
     border-radius: 40px;
-    background-color: whitesmoke;
 }
 
 .user_info{
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 10px;
+    top: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -35,4 +38,10 @@
 
 .tags{
     margin: 10px 0px 10px 0px;
+}
+
+.title{
+    color: blue;
+    font-size: 18px;
+    cursor: pointer;
 }

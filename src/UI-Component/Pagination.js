@@ -1,5 +1,16 @@
 import React from 'react';
 import { Pagination } from 'antd';
 import "./Pagination.css"
-const Paginations = () => <Pagination className='pagination' defaultCurrent={1} total={50} />;
+import { useDispatch, useSelector } from 'react-redux';
+
+const Paginations = () => {
+    const dispatch = useDispatch()
+    const totalPage = useSelector((state) => state.totalPage)
+    const page = useSelector((state) => state.page)
+    return <Pagination className='pagination' 
+                        onChange={(p) => dispatch({type:"CHANGE_PAGE", payload: p})} 
+                        defaultCurrent={page} 
+                        total={totalPage*10} 
+                        showSizeChanger={false}/>;
+}
 export default Paginations;
