@@ -9,13 +9,12 @@ function ArticleList () {
     for (let el of articles) {
         articleList.push(
             <div key={key} className="article">
-            <Link to={`/${el.slug}`} className="title">{el.title}</Link>
-            {/* <a className="title">{el.title}</a> */}
+            <Link to={`/${el.slug}`} className="title">{el.title.slice(0,100)}</Link>
             <div className="tags">
                 {el.tagList.map(tag => <span className="tag">{tag}</span>)}
             </div>
-            <div>
-                {el.description}
+            <div className="article_description">
+                {el.description.slice(0, 100)}
             </div>
             <div className="user_info">
                 <div>

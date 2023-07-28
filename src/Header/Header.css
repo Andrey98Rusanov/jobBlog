@@ -37,4 +37,5 @@
     cursor: pointer;
     font-size: 17px;
     transition: 0.08s;
+    text-decoration: none;
 }

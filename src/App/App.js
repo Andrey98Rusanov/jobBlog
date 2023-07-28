@@ -1,6 +1,5 @@
 import Header from "../Header/Header";
 import ArticleList from "../ArticleList/ArticleList";
-import Paginations from "../UI-Component/Pagination";
 import Article from "../Article/Article";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

@@ -14,7 +14,7 @@ function Article () {
     
     if (articles.length && articles[article()].slug === slug && slug!==undefined) return (
         <div className="article article_id">
-            <h3 className="title">{articles[article()].title}</h3>
+            <h3 className="title title_id">{articles[article()].title}</h3>
             <div className="tags">
                 {articles[article()].tagList.map(tag => <span className="tag">{tag}</span>)}
             </div>

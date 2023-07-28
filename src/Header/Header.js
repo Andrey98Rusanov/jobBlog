@@ -6,7 +6,7 @@ function Header () {
     const dispatch =useDispatch()
     return (
         <div className="header">
-            <Link to="/" className="logo" onClick={() => dispatch({type: "CHANGE_PAGE", payload: 1}) }>Realworld Blog</Link>
+            <Link to="/" className="logo">Realworld Blog</Link>
             <div className="header_buttons">
             <button className="header_button">Sign in</button>
             <button className="header_button">Sign up</button>
