@@ -1,6 +1,6 @@
-import React from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import React from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -9,5 +9,5 @@ const antIcon = (
     spin
   />
 );
-const Loader = () => <Spin className='loader' indicator={antIcon} />;
+const Loader = () => <Spin className="loader" indicator={antIcon} />;
 export default Loader;

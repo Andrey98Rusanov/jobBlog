@@ -1,8 +1,9 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import Api from "../../Api/Api";
 import Loader from "../UI-Component/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -24,37 +25,35 @@ const formItemLayout = {
 
 const CreateForm = () => {
   const api = new Api();
-  const isLoad = useSelector(state => state.isLoad)
+  const isLoad = useSelector((state) => state.isLoad);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [err, setErr] = useState({ username: "", email: "" });
   const onFinish = (values) => {
-    dispatch({type: "LOAD_CHANGE", payload: true})
-    api
-      .createUser({
-        username: values.nickname,
-        email: values.email,
-        password: values.password,
-      })
-      .then((res) => {
-        dispatch({type: "ADD_USER", payload: res.user})
+    dispatch({ type: "LOAD_CHANGE", payload: true });
+    api.createUser(values).then((res) => {
+      if (res.errors) {
+        setErr(res.errors);
+        dispatch({ type: "LOAD_CHANGE", payload: false });
+      } else {
+        setErr(false);
+        dispatch({ type: "ADD_USER", payload: res.user });
         dispatch({ type: "LOG_IN" });
-        dispatch({type: "LOAD_CHANGE", payload: false})
+        dispatch({ type: "LOAD_CHANGE", payload: false });
         navigate("/");
-      });
+      }
+    });
   };
-  return (
-    isLoad ? <Loader/> :
+  return isLoad ? (
+    <Loader />
+  ) : (
     <Form
       {...formItemLayout}
       className="login-form"
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ["zhejiang", "hangzhou", "xihu"],
-        prefix: "86",
-      }}
       style={{
         maxWidth: 600,
       }}
@@ -63,7 +62,7 @@ const CreateForm = () => {
       <h1 className="sign-in_title">Create new account</h1>
       Username
       <Form.Item
-        name="nickname"
+        name="username"
         tooltip="What do you want others to call you?"
         rules={[
           {
@@ -81,8 +80,16 @@ const CreateForm = () => {
         ]}
         style={{ width: 590 }}
       >
-        <Input />
+        <Input
+          style={err.username ? { borderColor: "red" } : null}
+          onChange={() => setErr(false)}
+        />
       </Form.Item>
+      {err.username ? (
+        <div style={{ color: "red", position: "absolute", top: 270 }}>
+          {"username is alredy taken"}
+        </div>
+      ) : null}
       Email address
       <Form.Item
         name="email"
@@ -98,8 +105,16 @@ const CreateForm = () => {
         ]}
         style={{ width: 590 }}
       >
-        <Input />
+        <Input
+          style={err.email ? { borderColor: "red" } : null}
+          onChange={() => setErr(false)}
+        />
       </Form.Item>
+      {err.email ? (
+        <div style={{ color: "red", position: "absolute", top: 350 }}>
+          {"email is alredy taken"}
+        </div>
+      ) : null}
       Password
       <Form.Item
         name="password"
@@ -162,7 +177,7 @@ const CreateForm = () => {
       </Form.Item>
       <Form.Item>
         <div className="sign-in_buttons">
-          <Button type="primary" htmlType="submit" style={{marginLeft:60}}>
+          <Button type="primary" htmlType="submit" style={{ marginLeft: 60 }}>
             Register
           </Button>
           Or <Link to="/sign-in">sign in now!</Link>

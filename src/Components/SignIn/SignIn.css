@@ -25,3 +25,7 @@
 .agreement_form {
   border: solid black 2px;
 }
+
+.sign-in_error {
+  color: red;
+}

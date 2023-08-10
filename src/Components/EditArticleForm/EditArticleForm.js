@@ -1,19 +1,21 @@
 import { Input, Button, Form } from "antd";
 import Api from "../../Api/Api";
 import styles from "./createArticle.module.css";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-function CreateArticle() {
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+function EditArticleForm() {
   const api = new Api();
+  const { slug } = useParams();
+  const currentArticle = useSelector((state) => state.currentArticle);
+  const page = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { TextArea } = Input;
   const onFinish = (values) => {
-    api.createArticle(values).then(() => {
-      api.getArticles(1).then((articles) => {
+    api.editArticle(values, slug).then(() => {
+      api.getArticles(page).then((articles) => {
         dispatch({ type: "ADD_ARTICLES", payload: articles });
-        dispatch({ type: "ADD_TOTAL", payload: articles });
-        navigate("/");
+        navigate(`/${slug}`);
       });
     });
   };
@@ -25,9 +27,13 @@ function CreateArticle() {
       onFinish={onFinish}
       initialValues={{
         remember: true,
+        title: currentArticle.title,
+        description: currentArticle.description,
+        body: currentArticle.body,
+        tagList: currentArticle.tagList,
       }}
     >
-      <h2 className={styles.articleTitle}> Create Article</h2>
+      <h2 className={styles.articleTitle}> Edit Article</h2>
       Title
       <Form.Item
         name="title"
@@ -139,4 +145,4 @@ function CreateArticle() {
   );
 }
 
-export default CreateArticle;
+export default EditArticleForm;

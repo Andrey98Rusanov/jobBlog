@@ -24,24 +24,23 @@ const formItemLayout = {
 
 const EditProfileForm = () => {
   const api = new Api();
-  const currentUser = useSelector(state => state.currentUser)
-  const isLoad = useSelector(state => state.isLoad)
+  const currentUser = useSelector((state) => state.currentUser);
+  const isLoad = useSelector((state) => state.isLoad);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    dispatch({type: "LOAD_CHANGE", payload: true})
-    api
-      .editUserAccount(values)
-      .then((res) => {
-        console.log(res)
-        dispatch({type: "ADD_USER", payload: res.user})
-        dispatch({type: "LOAD_CHANGE", payload: false})
-        navigate("/");
-      });
+    dispatch({ type: "LOAD_CHANGE", payload: true });
+    api.editUserAccount(values).then((res) => {
+      console.log(res);
+      dispatch({ type: "ADD_USER", payload: res.user });
+      dispatch({ type: "LOAD_CHANGE", payload: false });
+      navigate("/");
+    });
   };
-  return (
-    isLoad ? <Loader/> :
+  return isLoad ? (
+    <Loader />
+  ) : (
     <Form
       {...formItemLayout}
       className="login-form"
@@ -49,8 +48,8 @@ const EditProfileForm = () => {
       name="register"
       onFinish={onFinish}
       initialValues={{
-        residence: ["zhejiang", "hangzhou", "xihu"],
-        prefix: "86",
+        username: currentUser.username,
+        email: currentUser.email,
       }}
       style={{
         maxWidth: 600,
@@ -78,7 +77,7 @@ const EditProfileForm = () => {
         ]}
         style={{ width: 590 }}
       >
-        <Input defaultValue={currentUser.username}/>
+        <Input />
       </Form.Item>
       Email address
       <Form.Item
@@ -95,18 +94,13 @@ const EditProfileForm = () => {
         ]}
         style={{ width: 590 }}
       >
-        <Input defaultValue={currentUser.email} />
+        <Input />
       </Form.Item>
       New password
       <Form.Item
         name="password"
         rules={[
           {
-            required: true,
-            message: "Please input your password!",
-          },
-          {
-            required: true,
             message: "Your password must to be within 6 to 40 characters.",
             whitespace: true,
             min: 6,
@@ -119,18 +113,13 @@ const EditProfileForm = () => {
         <Input.Password />
       </Form.Item>
       Avatar image (url)
-      <Form.Item
-        name="image"
-        hasFeedback
-        style={{ width: 590 }}
-      >
+      <Form.Item name="image" hasFeedback style={{ width: 590 }}>
         <Input />
       </Form.Item>
-    
       <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
+        <Button type="primary" htmlType="submit">
+          Save
+        </Button>
       </Form.Item>
     </Form>
   );
